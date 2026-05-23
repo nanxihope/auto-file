@@ -1,0 +1,231 @@
+/* ===== Toolbar, Custom Tooltip, Settings Panel ===== */
+
+/* — Toolbar container — */
+.toolbar {
+  position: fixed; top: 20px; right: 20px; z-index: 1000;
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* — Shared toolbar button base — */
+.toolbar-btn {
+  height: 48px; border-radius: 24px; border: 1px solid var(--card-b);
+  background: var(--card);
+  backdrop-filter: var(--g); -webkit-backdrop-filter: var(--g);
+  box-shadow: var(--sh);
+  color: var(--text); font-size: 0.85rem; font-family: inherit;
+  cursor: pointer; outline: none; transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.toolbar-btn:hover {
+  transform: scale(1.08);
+  border-color: rgba(100,140,255,0.5);
+}
+/* Active / pressed glow */
+.toolbar-btn.active,
+.toolbar-btn.glow {
+  border-color: rgba(100,140,255,0.9);
+  background: linear-gradient(135deg, rgba(100,140,255,0.4), rgba(100,140,255,0.18));
+  box-shadow: 0 0 30px rgba(100,140,255,0.5), 0 0 60px rgba(100,140,255,0.2), var(--sh);
+}
+
+/* — Theme toggle — */
+.theme-btn {
+  width: 48px;
+  font-size: 1.3rem;
+}
+.theme-btn .moon { display: none; }
+[data-theme="dark"] .theme-btn .sun { display: none; }
+[data-theme="dark"] .theme-btn .moon { display: block; }
+
+/* — Glass toggle — */
+.glass-btn {
+  width: 48px;
+  font-size: 1.3rem;
+}
+.glass-btn .glass-on { display: none; }
+.glass-btn.active .glass-off { display: none; }
+.glass-btn.active .glass-on { display: block; }
+
+/* — Settings toggle — */
+.settings-btn {
+  width: 48px;
+  font-size: 1.2rem;
+}
+
+/* — Version selector — */
+.version-selector { position: relative; }
+.version-btn {
+  padding: 0 14px 0 10px; gap: 6px;
+}
+.version-btn .version-icon { font-size: 1rem; }
+.version-btn .version-text { font-weight: 500; }
+.version-btn .version-arrow {
+  font-size: 0.7rem; opacity: 0.6;
+  transition: transform 0.3s;
+}
+.version-selector.open .version-btn {
+  border-color: rgba(100,140,255,0.9);
+  background: linear-gradient(135deg, rgba(100,140,255,0.4), rgba(100,140,255,0.18));
+  box-shadow: 0 0 30px rgba(100,140,255,0.5), 0 0 60px rgba(100,140,255,0.2), var(--sh);
+  transform: scale(1.08);
+}
+.version-selector.open .version-arrow {
+  transform: rotate(180deg); opacity: 1;
+}
+.version-dropdown {
+  position: absolute; top: 56px; right: 0;
+  min-width: 180px;
+  border-radius: 16px; border: 1px solid var(--card-b);
+  background: var(--card);
+  backdrop-filter: var(--g); -webkit-backdrop-filter: var(--g);
+  box-shadow: var(--sh);
+  padding: 8px 6px;
+  opacity: 0; visibility: hidden;
+  transform: translateY(-8px) scale(0.96);
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.version-selector.open .version-dropdown {
+  opacity: 1; visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.version-option {
+  padding: 10px 14px; border-radius: 12px;
+  font-size: 0.85rem; color: var(--dim);
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 8px;
+}
+.version-option:hover {
+  background: rgba(100,140,255,0.12);
+  color: var(--text);
+}
+.version-option.active {
+  background: linear-gradient(135deg, rgba(100,140,255,0.35), rgba(0,184,148,0.25));
+  color: #fff; font-weight: 600;
+}
+.version-option.active::before {
+  content: '✓'; font-size: 0.75rem;
+}
+
+/* — Settings panel — */
+.settings-panel {
+  position: fixed; top: 76px; right: 20px; z-index: 1000;
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--card);
+  backdrop-filter: var(--g); -webkit-backdrop-filter: var(--g);
+  border: 1px solid var(--card-b);
+  padding: 16px 24px 16px 12px;
+  border-radius: 16px;
+  box-shadow: var(--sh);
+  transition: all 0.3s;
+  cursor: default;
+  opacity: 1; visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.settings-panel.collapsed {
+  opacity: 0; visibility: hidden;
+  transform: translateY(-8px) scale(0.96);
+  pointer-events: none;
+  padding: 0; width: 0; height: 0; overflow: hidden;
+}
+
+.ctrl-group { display: flex; flex-direction: column; gap: 4px; }
+.ctrl-group + .ctrl-group { margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(100,140,255,0.1); }
+.ctrl-label {
+  font-size: 0.7rem; color: var(--dim);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 2px; opacity: 0.7;
+}
+.ctrl-row { display: flex; align-items: center; gap: 6px; }
+.ctrl-row span { font-size: 1rem; width: 20px; text-align: center; }
+.ctrl-row input[type=range] {
+  width: 70px; height: 4px;
+  -webkit-appearance: none; appearance: none;
+  background: rgba(100,140,255,0.2);
+  border-radius: 2px; outline: none; cursor: pointer;
+}
+.ctrl-row input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #4a7bff; cursor: pointer;
+  box-shadow: 0 0 6px rgba(74,123,255,0.5);
+}
+.ctrl-row input[type=range]::-moz-range-thumb {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #4a7bff; cursor: pointer; border: none;
+  box-shadow: 0 0 6px rgba(74,123,255,0.5);
+}
+.mode-btn {
+  background: rgba(100,140,255,0.1);
+  border: 1px solid rgba(100,140,255,0.2);
+  color: var(--text);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.mode-btn.active {
+  background: rgba(100,140,255,0.35);
+  border-color: rgba(100,140,255,0.6);
+  color: #fff;
+}
+
+/* — Toggle switch buttons — */
+.toggle-btn {
+  background: rgba(100,140,255,0.1);
+  border: 1px solid rgba(100,140,255,0.2);
+  color: var(--text);
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  padding-left: 24px;
+}
+.toggle-btn::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(100,140,255,0.3);
+  transition: background 0.3s;
+}
+.toggle-btn.active::before {
+  background: #4a7bff;
+  box-shadow: 0 0 6px rgba(74,123,255,0.5);
+}
+.toggle-btn.active {
+  background: rgba(100,140,255,0.15);
+  border-color: rgba(100,140,255,0.4);
+}
+
+/* — Custom glass tooltip — */
+.tip {
+  position: fixed; z-index: 9999;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--card);
+  backdrop-filter: var(--g); -webkit-backdrop-filter: var(--g);
+  border: 1px solid var(--card-b);
+  box-shadow: var(--sh);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-family: inherit;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.tip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
