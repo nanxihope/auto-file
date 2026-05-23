@@ -1,0 +1,142 @@
+/* ===== Background Layers ===== */
+
+/* Particle canvas */
+#cvs { position: fixed; inset: 0; z-index: -1; }
+/* Canvas filter is managed by JS (updateCanvasFilter) via inline style */
+
+/* Mesh gradient background */
+.bg-mesh {
+  position: fixed; inset: 0; z-index: -3;
+  background: linear-gradient(135deg, #e8ecf8 0%, #f0f4ff 30%, #e6f0fa 60%, #f5f0ff 100%);
+  background-size: 400% 400%;
+  animation: meshMove 12s ease infinite;
+  transition: opacity 0.5s;
+}
+[data-theme="dark"] .bg-mesh { opacity: 0; }
+
+/* Dark mode background */
+.bg-dark {
+  position: fixed; inset: 0; z-index: -3;
+  background: linear-gradient(135deg, #0a0e1a 0%, #12183a 50%, #0d1f2d 100%);
+  background-size: 400% 400%;
+  animation: meshMove 15s ease infinite;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+[data-theme="dark"] .bg-dark { opacity: 1; }
+
+@keyframes meshMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Colorful blobs for glass refraction */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: -4;
+  animation: blobDrift 25s ease-in-out infinite;
+  transition: opacity 0.6s;
+  pointer-events: none;
+}
+.blob1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(91,141,255,0.45), transparent 70%); top: -150px; left: -120px; }
+.blob2 { width: 650px; height: 650px; background: radial-gradient(circle, rgba(0,212,170,0.35), transparent 70%); bottom: -100px; right: -100px; animation-delay: -10s; }
+.blob3 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,107,107,0.3), transparent 70%); top: 45%; left: 45%; animation-delay: -20s; }
+.blob4 { width: 550px; height: 550px; background: radial-gradient(circle, rgba(180,120,255,0.35), transparent 70%); top: 60%; left: -5%; animation-delay: -5s; }
+
+[data-theme="light"] .blob { opacity: 0.85; }
+[data-theme="dark"] .blob { opacity: 0.3; }
+[data-glass="on"] .blob { opacity: 1; }
+[data-glass="on"] .bg-mesh { opacity: 1; }
+[data-glass="on"] .orb { opacity: 1; }
+[data-glass="on"] .ripple { opacity: 1; }
+[data-glass="on"] .grid-pattern { opacity: 1; }
+
+@keyframes blobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, -30px) scale(1.15); }
+}
+
+/* Grid pattern */
+.grid-pattern {
+  position: fixed; inset: 0; z-index: -2;
+  opacity: 0.75;
+  background-image: radial-gradient(circle, rgba(100,140,255,0.4) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridPulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+[data-theme="dark"] .grid-pattern { opacity: 0.35; }
+[data-glass="on"] .grid-pattern { opacity: 0.9; background-image: radial-gradient(circle, rgba(100,140,255,0.55) 1px, transparent 1px); }
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.5; }
+}
+
+/* Diagonal lines */
+.diagonal-lines {
+  position: fixed; inset: 0; z-index: -2;
+  opacity: 0.05;
+  background: repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(100,140,255,0.4) 60px, rgba(100,140,255,0.4) 61px);
+  animation: lineSlide 20s linear infinite;
+  pointer-events: none;
+}
+
+/* Orbs */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0;
+  z-index: -2;
+  animation: orbFloat 18s ease-in-out infinite;
+  transition: opacity 0.5s;
+}
+.orb1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(91,141,255,0.7), transparent); top: -150px; left: -100px; }
+.orb2 { width: 450px; height: 450px; background: radial-gradient(circle, rgba(0,212,170,0.6), transparent); bottom: -120px; right: -100px; animation-delay: -6s; }
+.orb3 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,107,107,0.55), transparent); top: 35%; left: 55%; animation-delay: -12s; }
+.orb4 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(180,120,255,0.6), transparent); top: 70%; left: 15%; animation-delay: -9s; }
+.orb5 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,209,102,0.5), transparent); top: 10%; right: 20%; animation-delay: -15s; }
+[data-theme="dark"] .orb { opacity: 0.55; }
+[data-theme="light"] .orb { opacity: 0.85; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -40px) scale(1.15); }
+  66% { transform: translate(-30px, 30px) scale(0.9); }
+}
+
+/* Ripples */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  border: 1px solid rgba(100,140,255,0.12);
+  z-index: -2;
+  animation: rippleExpand 10s ease-out infinite;
+  opacity: 0;
+}
+[data-theme="dark"] .ripple { opacity: 0.75; }
+[data-theme="light"] .ripple { opacity: 0.85; }
+
+.ripple1 { width: 300px; height: 300px; top: 20%; left: 10%; }
+.ripple2 { width: 400px; height: 400px; top: 50%; left: 60%; animation-delay: -3s; }
+.ripple3 { width: 250px; height: 250px; top: 80%; left: 30%; animation-delay: -6s; }
+
+@keyframes rippleExpand {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* Pause all background animations when toggled off */
+[data-bg-anim="off"] .blob,
+[data-bg-anim="off"] .bg-mesh,
+[data-bg-anim="off"] .bg-dark,
+[data-bg-anim="off"] .grid-pattern,
+[data-bg-anim="off"] .diagonal-lines,
+[data-bg-anim="off"] .orb,
+[data-bg-anim="off"] .ripple {
+  animation-play-state: paused;
+}
