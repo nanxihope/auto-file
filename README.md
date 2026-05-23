@@ -1,1 +1,4 @@
 # auto-file
+```
+ai-guide
+```
