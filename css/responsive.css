@@ -1,0 +1,15 @@
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .cols { grid-template-columns: 1fr; }
+  .chart-label { width: 120px; }
+  .section { padding: 24px 16px; }
+  header { padding: 80px 16px 40px; }
+  .sidebar { width: 220px; }
+  .nav-toggle { left: 12px; width: 40px; height: 40px; }
+  .nav-toggle.shifted { left: 192px; }
+  .toolbar { gap: 6px; right: 10px; top: 12px; }
+  .toolbar-btn { height: 40px; border-radius: 20px; }
+  .toolbar-btn.theme-btn, .toolbar-btn.glass-btn, .toolbar-btn.settings-btn { width: 40px; font-size: 1rem; }
+  .version-btn .version-text { font-size: 0.78rem; }
+  .settings-panel { right: 10px; top: 56px; }
+}
