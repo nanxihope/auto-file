@@ -1,0 +1,38 @@
+/* ===== CSS Variables & Theme System ===== */
+:root {
+  --bg: #f0f4f8;
+  --card: rgba(255,255,255,0.32);
+  --card-b: rgba(100,140,255,0.45);
+  --text: #1a1a2e;
+  --dim: #5a5a7a;
+  --a: #4a7bff;
+  --a2: #00b894;
+  --a3: #ff6b6b;
+  --a4: #f39c12;
+  --a5: #a55eea;
+  --g: blur(50px) saturate(2.2);
+  --sh: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+[data-theme="dark"] {
+  --bg: #0a0e1a;
+  --card: rgba(20,25,45,0.72);
+  --card-b: rgba(100,140,255,0.4);
+  --text: #e0e6f0;
+  --dim: #8a94b8;
+  --sh: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Glass ON: --g and --sh are set by JS (updateCanvasFilter) as concrete values.
+   Only card/sh variables are overridden here. */
+[data-glass="on"] {
+  --card: rgba(255,255,255,0.03);
+  --card-b: rgba(100,140,255,0.7);
+  --sh: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.55), inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+[data-theme="dark"][data-glass="on"] {
+  --card: rgba(20,25,45,0.15);
+  --card-b: rgba(100,140,255,0.6);
+  --sh: 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 0 0 1px rgba(255,255,255,0.05);
+}
